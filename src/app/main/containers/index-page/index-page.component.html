@@ -1,0 +1,156 @@
+<app-navbar></app-navbar>
+<div class="container" style="padding: 10px">
+  {{ postsCate | json }}
+  <!-- Special -->
+  <div class="row">
+    <div class="col-12">
+      <div class="row p-2">
+        <h3>{{ titleSpecial }}</h3>
+      </div>
+      <div class="row p-2 pb-2">
+        <div class="col-8">
+          <div class="row" *ngFor="let post of postsSpecial; let first = first">
+            <!-- Image -->
+            <div class="col-6" *ngIf="first">
+              <img
+                [src]="thumbnail + post.image"
+                role="button"
+                (click)="onClick(post.id)"
+                alt="no"
+                style="width: 100%; height: 100%; padding-bottom: 5px"
+              />
+            </div>
+            <!-- Info -->
+            <div class="col-6 p-0" *ngIf="first">
+              <h4 role="button" (click)="onClick(post.id)">{{ post.title }}</h4>
+              {{ post.content.substring(0, 120) + "..." }}
+              <h6 class="text-danger" role="button" (click)="onClick(post.id)">
+                Xem thêm
+              </h6>
+            </div>
+            <div>
+              <hr
+                *ngIf="first"
+                style="width: 90%; padding-top: 2%; background-color: red"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-4 pl-4">
+          <!-- Content -->
+          <div
+            *ngFor="let post of postsSpecial; let first = first; let x = index"
+          >
+            <div
+              class="container"
+              *ngIf="!first && post.special == true && x < 4"
+            >
+              <div class="row">
+                <div class="col-5 p-0">
+                  <img
+                    [src]="thumbnail + post.image"
+                    role="button"
+                    (click)="onClick(post.id)"
+                    alt="no"
+                    style="width: 100%; height: 100%; padding-bottom: 5px"
+                  />
+                </div>
+                <div class="col-7 pl-1">
+                  <h6 role="button" (click)="onClick(post.id)">
+                    {{ post.title }}
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--  -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Newest + By category -->
+  <div class="row">
+    <!-- Panel - Left - Newest-->
+    <div class="col-5">
+      <h3>{{ titleNewest }}</h3>
+      <hr />
+      <!-- Content -->
+      <div class="container p-2" *ngFor="let post of posts">
+        <div class="row">
+          <h4 (click)="onClick(post.id)" role="button">{{ post.title }}</h4>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <div *ngIf="!post.image">
+              <img
+                [src]="thumbnailDefault"
+                role="button"
+                (click)="onClick(post.id)"
+                alt="no"
+                style="width: 100px; height: 100px"
+              />
+            </div>
+            <div *ngIf="post.image">
+              <img
+                [src]="thumbnail + post.image"
+                role="button"
+                (click)="onClick(post.id)"
+                alt="no"
+                style="width: 100px; height: 100px"
+              />
+            </div>
+          </div>
+          <div class="col-9">
+            {{ post.content.substring(0, 100) + "..." }}
+            <h6 class="text-danger" role="button" (click)="onClick(post.id)">
+              Xem thêm
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Panel - Right - By category -->
+    <div class="col-7" style="border-left: 1px solid lightgray">
+      <h3>{{ titleCate }}</h3>
+      <hr />
+      <div class="container" *ngFor="let cate of categories">
+        <!-- Title -->
+        <div class="row p-2" style="border-bottom: 1px solid lightgray">
+          <h4>{{ cate.category }}</h4>
+        </div>
+        <!-- Content container -->
+        <div class="row">
+          <!-- Left content container -->
+          <div class="col-12" *ngFor="let post of posts; let arr">
+            <!-- Content -->
+            <div class="row p-2" *ngIf="post.category == cate.category">
+              <div class="col-4">
+                <img
+                  [src]="thumbnail + post.image"
+                  role="button"
+                  (click)="onClick(post.id)"
+                  alt="no"
+                  style="width: 100%; height: 100%"
+                />
+              </div>
+              <div class="col-8">
+                <h5 role="button" (click)="onClick(post.id)">
+                  {{ post.title }}
+                </h5>
+                <h6
+                  class="text-danger"
+                  role="button"
+                  (click)="onClick(post.id)"
+                >
+                  Xem thêm
+                </h6>
+              </div>
+            </div>
+          </div>
+          <!--  -->
+        </div>
+        <!--  -->
+      </div>
+    </div>
+  </div>
+</div>

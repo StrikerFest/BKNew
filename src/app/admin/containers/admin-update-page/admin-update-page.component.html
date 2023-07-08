@@ -1,0 +1,145 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col-12 pt-3 pb-1 text-center">
+      <h1>Tạo bài báo mới</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+      <!--  -->
+      <form
+        #form="ngForm"
+        novalidate
+        (ngSubmit)="handleSubmit(form.value, form.valid)"
+      >
+        <!-- {{ detail | json }} -->
+        <!--  -->
+        <div>
+          <input type="hidden" name="id" #id="ngModel" [ngModel]="detail.id" />
+        </div>
+        <div class="row">
+          Tiêu đề bài báo
+          <input
+            type="text"
+            name="title"
+            required
+            minlength="10"
+            #title="ngModel"
+            [ngModel]="detail?.title"
+          />
+          <div class="error" *ngIf="title.errors?.['required']">
+            Tiêu đề bắt buộc
+          </div>
+          <div class="error" *ngIf="title.errors?.['minlength']">
+            Độ dài tối thiểu 10
+          </div>
+        </div>
+        <!--  -->
+        <!--  -->
+        <div class="row">
+          Tên người viết
+          <input
+            type="text"
+            name="author"
+            required
+            minlength="2"
+            #author="ngModel"
+            [ngModel]="detail?.author"
+          />
+          <div class="error" *ngIf="author.errors">Tên người viết bắt buộc</div>
+        </div>
+        <!--  -->
+        <!--  -->
+        <div class="row">
+          Nội dung
+          <textarea
+            type="text"
+            name="content"
+            required
+            #content="ngModel"
+            [ngModel]="detail?.content"
+          ></textarea>
+
+          <div class="error" *ngIf="content.errors">Nội dung bắt buộc</div>
+        </div>
+        <!--  -->
+        <!--  -->
+        <div class="row">
+          Danh mục ( select )
+          <select name="category" [ngModel]="detail?.category">
+            <option *ngFor="let item of categories" [ngValue]="item.id">
+              {{ item.category }}
+            </option>
+          </select>
+        </div>
+        <!--  -->
+        <div class="row">
+          Báo đặc biệt (Sẽ được hiển thị lên trang nhất)
+          <input
+            type="checkbox"
+            name="special"
+            [ngModel]="detail?.special"
+            (ngModelChange)="toggleCheckIn($event)"
+          />
+        </div>
+        <!--  -->
+        <div class="row">
+          Ngày tạo ( fixed date ):
+          <br />
+          {{ detail?.date | date: "d MMMM yyyy - hh:mm:ss" }}
+          <input
+            type="number"
+            name="date"
+            #date="ngModel"
+            [ngModel]="detail?.date"
+          />
+        </div>
+        <!--  -->
+        <!--  -->
+        <div class="row">
+          Ảnh ( file )
+          <!-- <input
+            type="file"
+            name="image"
+            required
+            #image="ngModel"
+            [ngModel]="detail?.image"
+          /> -->
+          <img
+            role="button"
+            [src]="thumbnail + detail.image"
+            alt="no"
+            style="width: 100%; height: 100%; padding-bottom: 5px"
+          />
+          <input
+            type="file"
+            name="image"
+            (change)="uploadImage(detail.image, $event)"
+          />
+          <input
+            type="hidden"
+            [value]="detail.image"
+            name="image"
+            #hiddenImage="ngModel"
+            [ngModel]="detail.image"
+          />
+        </div>
+        <!--  -->
+        <!--  -->
+        <br />
+        <div class="row">
+          <button
+            type="submit"
+            [disabled]="form.invalid"
+            class="btn btn-danger"
+          >
+            Sửa
+          </button>
+        </div>
+      </form>
+      <!--  -->
+    </div>
+  </div>
+</div>

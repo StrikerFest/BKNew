@@ -1,0 +1,36 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center pt-4">
+      <h1 *ngIf="post.special == true">Báo đặc biệt - {{ post.title }}</h1>
+      <h1 *ngIf="post.special == false">{{ post.title }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <h5>
+        {{ post.author }} - {{ post.date | date: "d MMMM yyyy - hh:mm:ss" }}
+      </h5>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div *ngIf="!post.image">
+      <img
+        [src]="thumbnailDefault"
+        alt="no"
+        style="width: 800px; height: 400px"
+      />
+    </div>
+    <div *ngIf="post.image">
+      <img
+        [src]="thumbnail + post.image"
+        alt="no"
+        style="width: 800px; height: 400px"
+      />
+    </div>
+  </div>
+  <div class="row p-5">
+    <p>{{ post.content }}</p>
+  </div>
+</div>
